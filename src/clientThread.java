@@ -48,7 +48,7 @@ public class clientThread extends Thread{
 					server.removeUser(name);
 				else if(s.contains("/File")){
 					msg = s.split(" ");
-					server.fileTransfer(name,msg[1], client.getInetAddress().getHostAddress());
+					server.fileTransfer(name,msg[1], client.getInetAddress().getHostAddress(), msg[2]);
 				}
 				else 
 					server.broadcast(name, s);

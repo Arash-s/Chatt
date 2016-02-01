@@ -2,18 +2,23 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.Socket;
 
-public class FileRecieve{
+public class FileRecieve implements Runnable{
 	
-  //public FileRecieve(String server){
-	
-	public static void main(String[] args){
-	String	server = "localhost";
+  private String server;
+  private String fileName;;
+
+public FileRecieve(String server, String fileName){
+	  this.server = server;
+	  this.fileName = fileName;
+  }
+  
+	public void run(){
 	  try{
       Socket socket = null;
 
       socket = new Socket(server, 4444);
 
-      FileOutputStream fos = new FileOutputStream("recieved.jpg");
+	FileOutputStream fos = new FileOutputStream(fileName);
      
       byte[] buffer = new byte[1024];
       int count;

@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 public class FileTransfer {
 	
 	
-    public FileTransfer(Stage primaryStage, String style, String name, String IP){
+    public FileTransfer(Stage primaryStage, String style, String name, String IP, String fileName){
 
     	Stage dialog = new Stage();    	
     	dialog.initStyle(StageStyle.UTILITY);
@@ -40,8 +40,10 @@ public class FileTransfer {
         accept.setPrefWidth(85);
         accept.setOnAction(new EventHandler<ActionEvent>(){
         	@Override
-        	public void handle(ActionEvent e){        		
-        		new FileRecieve(IP);
+        	public void handle(ActionEvent e){        	
+        		new  Thread(new FileRecieve(IP, fileName)).start();
+        		dialog.close();
+
         	}
         });
 

@@ -1,3 +1,5 @@
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -87,10 +90,23 @@ public class GUI extends Application {
         Button fileB = new Button("Send File");
         fileB.setPrefWidth(85);
         fileB.setOnAction(new EventHandler<ActionEvent>(){
+        	
+        	
         	@Override
         	public void handle(ActionEvent e){
+        		FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().addAll(
+                	    new FileChooser.ExtensionFilter("All Images", "*.*"),
+                	    new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                	    new FileChooser.ExtensionFilter("GIF", "*.gif"),
+                	    new FileChooser.ExtensionFilter("BMP", "*.bmp"),
+                	    new FileChooser.ExtensionFilter("PNG", "*.png")
+                	);
+                File file = fileChooser.showOpenDialog(primaryStage);
+               
+                
         		String selected = list.getSelectionModel().getSelectedItem();
-        		sendFile(selected);
+        		sendFile(selected, file);
         	}
         });
         
@@ -143,9 +159,9 @@ public class GUI extends Application {
         
     }
     
-    protected void sendFile(String selected) {
-    	prog.sendmsg("/File "+ selected);
-    	new FileSend();
+    protected void sendFile(String selected, File file) {
+    	new  Thread(new FileSend(file)).start();
+    	prog.sendmsg("/File "+ selected +" "+ file.getName());
 		
 	}
 
@@ -166,8 +182,8 @@ public class GUI extends Application {
 
     }
 
-	public void fileTransfer(String name, String IP) {
-		Platform.runLater(()-> {FileTransfer dialog = new FileTransfer(primaryStage,Style, name, IP);});
+	public void fileTransfer(String name, String IP, String fileName) {
+		Platform.runLater(()-> {FileTransfer dialog = new FileTransfer(primaryStage,Style, name, IP, fileName);});
     	
     	
 	}
@@ -186,8 +202,7 @@ public class GUI extends Application {
         ObservableList<String> items =FXCollections.observableArrayList();
 		for(int i=3; i<users.length ; i++){
 			items.add(users[i]);
-		}
-		//list.setItems(items);
+		};
 		Platform.runLater(()-> {list.setItems(items);});	
 	}
 

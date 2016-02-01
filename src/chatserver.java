@@ -78,8 +78,8 @@ class chatserver{
 		
 	}
 
-	public void fileTransfer(String name, String target, String ip) {
-		clients.get(target).sendmsg("/File "+ name  + " " + ip);
+	public void fileTransfer(String name, String target, String ip, String fileName) {
+		clients.get(target).sendmsg("/File "+ name  + " " + ip + " " + fileName);
 	}
 	
 

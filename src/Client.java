@@ -32,7 +32,7 @@ class Client extends Thread{
 					else if(s.contains("/File")){
 						System.out.println("recieved file req");
 						String[] list = s.split(" ");
-						ui.fileTransfer(list[1],list[2]);				
+						ui.fileTransfer(list[1],list[2],list[3]);				
 					}
 					else
 						ui.addmsg(s);

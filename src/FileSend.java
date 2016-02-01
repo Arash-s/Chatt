@@ -5,17 +5,20 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class FileSend{
+public class FileSend implements Runnable{
 	
-	//public FileSend(){
-	public static void main(String[] args){
+	File myFile;
+	public FileSend(File myFile){
+		this.myFile=myFile;
+	}
+	
+	public void run(){
     ServerSocket serverSocket = null;
     Socket socket = null;
     OutputStream out = null;
 
     try {
         serverSocket = new ServerSocket(4444);
-        File myFile = new File("send.jpg");
         System.out.println("server up");
         socket = serverSocket.accept();
         System.out.println("connection up");
